@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 // import Pagination from "../Comman/Pagination";
 
 const ProductsList = () => {
-  const [page,setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useSearchParams();
   const category = search.get("category");
   const { data, error, isLoading } = useData(
@@ -22,8 +22,8 @@ const ProductsList = () => {
     [category, page]
   );
   useEffect(() => {
-    setPage(1)
-  },[category])
+    setPage(1);
+  }, [category]);
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 
   // const handlePageChange = (page) => {
@@ -36,13 +36,18 @@ const ProductsList = () => {
       const { scrollTop, clientHeight, scrollHeight } =
         document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight - 1 && !isLoading && data && page<data.totalPages) {
-        setPage(prev => prev+1);
+      if (
+        scrollTop + clientHeight >= scrollHeight - 1 &&
+        !isLoading &&
+        data &&
+        page < data.totalPages
+      ) {
+        setPage((prev) => prev + 1);
       }
     };
     window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll" ,handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [data, isLoading]);
 
   return (
